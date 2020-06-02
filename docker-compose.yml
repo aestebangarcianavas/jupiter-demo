@@ -1,0 +1,37 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres:10"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    command:
+      - postgres
+      - -c
+      - shared_buffers=1GB
+      - -c
+      - effective_cache_size=6GB
+      - -c
+      - work_mem=512MB
+      - -c
+      - random_page_cost=1.1
+      - -c
+      - maintenance_work_mem=512MB
+      - -c
+      - checkpoint_completion_target=0.9
+      - -c
+      - wal_buffers=16MB
+      - -c
+      - max_worker_processes=4
+      - -c
+      - max_parallel_workers_per_gather=2
+      - -c
+      - synchronous_commit=off
+      - -c
+      - max_wal_size=2GB
+    volumes:
+      - db-data:/var/lib/postgresql
+volumes:
+  db-data:

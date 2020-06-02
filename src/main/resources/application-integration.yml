@@ -1,0 +1,36 @@
+##################################################################################################
+# application configuration
+##################################################################################################
+info:
+  app:
+    artifact: '@project.artifactId@'
+    version: '@project.version@'
+    name: '@project.name@'
+    description: '@project.description@'
+
+##########################################################################################
+# Spring provide depending on -DAPP_ENV=stg/pre/live/local(default)
+##########################################################################################
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: ${APP_ENV:test}
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    # enable H2 web console and set url for web console
+    # http://localhost:8080/console
+    h2:
+      console:
+        enabled: true
+        path: /console
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create  # none, create, create-drop, update
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
